@@ -1,0 +1,20 @@
+PODS:
+  - CircleProgressBar (0.32)
+  - lottie-ios (4.5.1)
+
+DEPENDENCIES:
+  - CircleProgressBar
+  - lottie-ios
+
+SPEC REPOS:
+  trunk:
+    - CircleProgressBar
+    - lottie-ios
+
+SPEC CHECKSUMS:
+  CircleProgressBar: 3920079be5224b62b3d9ed6eeb23ac01c835b681
+  lottie-ios: 248b380fa1b97d18e792c37d90da7ab2aa0d6562
+
+PODFILE CHECKSUM: b0bca3983ba208f0856c49ee83b86a799fcc945e
+
+COCOAPODS: 1.16.2

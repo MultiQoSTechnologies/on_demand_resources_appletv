@@ -14,27 +14,137 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        self.window = UIApplication.window
+        self.window?.backgroundColor = UIColor.white
+        
+        self.window?.rootViewController = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
+        self.window?.makeKeyAndVisible()
+        
+        self.initHomeController()
+        
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+       
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+       
     }
-
-
 }
 
+extension AppDelegate {
+    
+    // Initiated the introduction screen
+    func initIntroductionController() {
+        
+        guard let introductionVC = IntroductionVC.instantiateFrom(appStoryboard: .main) else{
+            return
+        }
+        
+        setWindowRootViewController(
+            rootVC: UINavigationController(rootViewController: introductionVC),
+            animated: true
+        )
+        
+        return
+    }
+    
+    // Initiated the downloadVC screen
+    func initDownloadController() {
+        
+        guard let downloadVC = DownloadVC.instantiateFrom(appStoryboard: .main) else{
+            return
+        }
+        
+        setWindowRootViewController(
+            rootVC: UINavigationController(rootViewController: downloadVC),
+            animated: true
+        )
+        
+        return
+    }
+    
+    // Initiated the downloadVC screen
+    func initVideoPlayerController() {
+        
+        guard let videoPlayerVC = VideoPlayerVC.instantiateFrom(appStoryboard: .main) else{
+            return
+        }
+        
+        setWindowRootViewController(
+            rootVC: UINavigationController(rootViewController: videoPlayerVC),
+            animated: true
+        )
+        
+        return
+    }
+    
+    func getVideoURL(fileName: String) -> URL? {
+        // Get the document directory path
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        
+        // Construct the URL for the video file
+        let videoURL = documentDirectory?.appendingPathComponent(fileName)
+        
+        // Check if the file exists at the URL
+        if FileManager.default.fileExists(atPath: videoURL?.path ?? "") {
+            return videoURL
+        } else {
+            return nil
+        }
+    }
+    
+    // Initiated the Home screen
+    func initHomeController() {
+        
+        if let downloadFinish: Bool = AppUserDefaults[.downloadFinish], downloadFinish {
+            self.initVideoPlayerController()
+        } else {
+            if let download: Bool = AppUserDefaults[.isInstall], download {
+                self.initDownloadController()
+            } else {
+                self.initIntroductionController()
+            }
+        }
+    }
+    
+}
+
+
+extension AppDelegate {
+    func setWindowRootViewController(rootVC:UIViewController?, animated:Bool, completion: ((Bool) -> Void)? = nil) {
+        guard rootVC != nil,
+              let window = self.window else {
+            return
+        }
+        
+        UIView.transition(
+            with: window,
+            duration: animated ? 0.6 : 0.0,
+            options: .transitionCrossDissolve,
+            animations: {
+                
+                let oldState = UIView.areAnimationsEnabled
+                UIView.setAnimationsEnabled(false)
+                window.rootViewController = rootVC
+                UIView.setAnimationsEnabled(oldState)
+                
+            }) { (finished) in
+                
+                if let handler = completion {
+                    handler(true)
+                }
+            }
+    }
+}

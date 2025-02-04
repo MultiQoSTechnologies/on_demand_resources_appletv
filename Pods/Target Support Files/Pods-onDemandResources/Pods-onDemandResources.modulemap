@@ -1,0 +1,6 @@
+framework module Pods_onDemandResources {
+  umbrella header "Pods-onDemandResources-umbrella.h"
+
+  export *
+  module * { export * }
+}
