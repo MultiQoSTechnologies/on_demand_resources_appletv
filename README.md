@@ -2,7 +2,7 @@
 
 On-demand resources are app contents that are hosted on the App Store and are separate from the related app bundle that you download. They enable smaller app bundles, faster downloads, and richer app content. The app requests sets of on-demand resources, and the operating system manages downloading and storage. The app uses the resources and then releases the request. After downloading, the resources may stay on the device through multiple launch cycles, making access even faster.
 
-tvOS App bundle size is 4GB.\n
+tvOS App bundle size is 4GB.  
 Hosted on-demand resources size is 20GB.
 
 # How On-Demand Resources Work
