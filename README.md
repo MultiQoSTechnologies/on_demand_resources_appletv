@@ -9,6 +9,7 @@ Hosted on-demand resources size is 20GB.
 # How On-Demand Resources Work
 Request: The app requests specific resources, grouped into asset packs.
 Download: The operating system downloads the requested resources in the background.
+
 Use: The app accesses the downloaded resources for immediate use.
 Release: When no longer needed, the app releases the resources, freeing up device storage.
 Persistence: Resources remain on the device for subsequent app launches, ensuring faster access.
